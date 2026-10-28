@@ -1,4 +1,3 @@
-cat << 'EOF' > 01-apps.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -82,7 +81,3 @@ spec:
           args: ["-text=Hello from App 4"]
           ports:
             - containerPort: 5678
-EOF
-
-kubectl apply -f 01-apps.yaml
-kubectl get pods

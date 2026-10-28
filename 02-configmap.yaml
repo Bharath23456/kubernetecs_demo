@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+data:
+  APP1_TEXT: "Hello from App 1 (Loaded from ConfigMap!)"
+  ENV_NAME: "production"

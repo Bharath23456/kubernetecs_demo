@@ -1,0 +1,1 @@
+[{"op": "replace", "path": "/spec/template/spec/containers/0/args", "value": ["-text=Hello from App 1 - V2 Updated"]}]

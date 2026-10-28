@@ -1,0 +1,30 @@
+mkdir -p .github/workflows
+
+cat << 'EOF' > .github/workflows/cicd.yml
+name: Kubernetes CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Start Minikube
+        uses: medyagh/setup-minikube@latest
+
+      - name: Apply All Kubernetes Files in Order
+        run: |
+          kubectl apply -f 01-apps.yaml
+          kubectl apply -f 02-configmap.yaml
+          kubectl apply -f 03-secret.yaml
+          kubectl apply -f 04-storage.yaml
+          kubectl apply -f 05-app1-upgrade.yaml
+          kubectl apply -f 06-ingress.yaml
+          kubectl rollout status deployment/app1 --timeout=60s
+          kubectl get all
+EOF

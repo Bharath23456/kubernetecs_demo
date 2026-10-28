@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app1
+  template:
+    metadata:
+      labels:
+        app: app1
+    spec:
+      containers:
+        - name: app1
+          image: hashicorp/http-echo:1.0.0
+          envFrom:
+            - configMapRef:
+                name: my-config
+            - secretRef:
+                name: my-secret
+          args: ["-text=$(APP1_TEXT)"]
+          ports:
+            - containerPort: 5678
+          volumeMounts:
+            - name: permanent-storage
+              mountPath: /data
+      volumes:
+        - name: permanent-storage
+          persistentVolumeClaim:
+            claimName: my-pvc
